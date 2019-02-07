@@ -1,0 +1,48 @@
+1. 0:    proc  - \(\:root\:\) creates proc  0 \(\:init\:\)		(skip)
+2. ltl [a-Z0-9]*: \[\] \(([a-Z\(\)\[\]0-9\_\-\<\>\= \&\|])*		(property) (skip)
+
+
+
+
+
+
+
+(RESULT* . PROMPT . CHOICES . \d)* . RESULT* . PROMPT . CHOICES  <
+
+
+
+
+
+
+
+RESULT:
+optionally:
+Starting user with pid 1
+  1:    proc  0 (:init::1) creates proc  1 (user)
+Starting (.+) with pid (\d+)\n  (\d+):    proc  (\d+) \((.+)\:(\d+)\) creates proc  (\d+) \((.+)\)\n
+Then:
+ 1:    proc  0 (:init::1) deadlock.pml:6 (state 1)     [(run thread())]
+^\s*(\d+):\s*proc\s*(\d+)\s*\((.+)\:(\d+)\)\s*(.+)\:(\d+)\s*\(state\s*(\d+)\)\s*\[(.+)\]
+Then, variables:
+\s*(.*) = (.*)		(multiple lines, until blank line)
+
+
+PROMPT:
+Select a statement | Select stmnt
+
+CHOICES:
+choice 1: proc  1 (TM:1) toy-maker-min-g.pml:11 (state 1) [Stage = Order]
+choice #, proc #, proc name, proc priority, filename, line number, state #, code
+choice (\d*): proc  (\d*) \((.*)\:(\d)*\) (.+?:)(\d*) \(state (\d*)\) \[(.*)\]		(multiple lines, until the following:)
+Select \[\d*\-\d*\]
+
+
+
+running  a process:
+trace:
+*
+-i:
+Starting <process name> with pid <pid>
+  <step #>:    proc  <creator process #> (<creator process name>:<priority>) creates proc  <proc #> (<process name>)
+  <step #>:    proc  <creator process #> (<creator process name>:<priority>) <filename>:<line number> (state <state #>)    [(run <process name>())]
+                <variable evaluations>

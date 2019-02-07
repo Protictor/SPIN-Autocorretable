@@ -1,0 +1,31 @@
+# 1 "critical-g.pml"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
+# 1 "critical-g.pml"
+bool turn, flag[2];
+byte ncrit;
+
+init
+{
+  run user(0)
+  run user(1)
+}
+
+
+proctype user(byte pno)
+{
+do
+::
+    flag[pno] = 1;
+    turn = 1 - pno;
+    ncrit++;
+
+    ncrit--;
+
+    flag[pno] = 0;
+od
+}
+
+ltl p0 { []((ncrit >= 0) && (ncrit <= 1))}

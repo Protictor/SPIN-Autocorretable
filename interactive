@@ -1,0 +1,170 @@
+--------------------------------toy maker:
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl ltl_0: [] (<> ((Stage==Assemble)))
+Starting TM with pid 1
+  1:    proc  0 (:init::1) creates proc  1 (TM)
+  1:    proc  0 (:init::1) toy-maker.pml:8 (state 1)    [(run TM())]
+                Stage = 0
+                gvar = 0
+Select a statement
+        choice 1: proc  1 (TM:1) toy-maker.pml:16 (state 1) [Stage = Order]
+        choice 2: proc  0 (:init::1) toy-maker.pml:10 (state 2) [ivar2 = 2]
+Select [1-2]:  in 411 bytes.
+
+
+
+----------------------------------- toy maker minimal
+the child's message is:
+
+
+  1:    proc  0 (:init::1) toy-maker-min-g.pml:5 (state 1)      [(run TM())]
+                Stage = 0
+Select a statement
+        choice 1: proc  1 (TM:1) toy-maker-min-g.pml:11 (state 1) [Stage = Order]
+Select [1-2]: 1
+  2:    proc  1 (TM:1) toy-maker-min-g.pml:11 (state 1) [Stage = Order]
+                Stage = Order
+Select a statement
+        choice 1: proc  1 (TM:1) toy-maker-min-g.pml:13 (state 2) [Stage = Cut]
+Select [1-2]: 1
+  3:    proc  1 (TM:1) toy-maker-min-g.pml:13 (state 2) [Stage = Cut]
+                Stage = Cut
+Select a statement
+        choice 1: proc  1 (TM:1) toy-maker-min-g.pml:15 (state 3) [Stage = Assemble]
+        choice 2: proc  1 (TM:1) toy-maker-min-g.pml:16 (state 4) [Stage = Paint]
+Select [1-3]: #end# in 805 bytes.
+
+
+----------------------------------drink:
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl p0: [] ((num_drinks<=2))
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) s-drinkf-min.pml:36 (state 1) [(run perhaps_buy(milk))]
+        choice 2: proc  0 (:init::1) s-drinkf-min.pml:37 (state 2) [(run perhaps_buy(lemonade))]
+        choice 3: proc  0 (:init::1) s-drinkf-min.pml:38 (state 3) [(run perhaps_buy(water))]
+Select [0-3]:  in 388 bytes.
+
+
+------------------------------mutual exc:
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl p0: [] (((ncrit>=0)) && ((ncrit<=1)))
+Starting user with pid 1
+  1:    proc  0 (:init::1) creates proc  1 (user)
+  1:    proc  0 (:init::1) critical-g.pml:6 (state 1)   [(run user(0))]
+                turn = 0
+                flag[0] = 0
+                flag[1] = 0
+                ncrit = 0                
+Select a statement
+        choice 1: proc  1 (user:1) critical-g.pml:15 (state 1) [flag[pno] = 1]
+        choice 2: proc  0 (:init::1) critical-g.pml:7 (state 2) [(run user(1))]
+Select [1-2]:  in 457 bytes.
+
+
+---------------------- deadlock
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl p0: ([] (<> ((lockA==0)))) || ([] (<> ((lockB==0))))
+Starting thread with pid 1
+  1:    proc  0 (:init::1) creates proc  1 (thread)
+  1:    proc  0 (:init::1) deadlock.pml:6 (state 1)     [(run thread())]
+                lockA = 0
+                lockB = 0
+Select a statement
+        choice 1: proc  1 (thread:1) deadlock.pml:13 (state 1) [(1)]
+        choice 2: proc  1 (thread:1) deadlock.pml:30 (state 11) [(1)]
+        choice 3: proc  0 (:init::1) deadlock.pml:7 (state 2) [(run thread())]
+Select [1-3]:  in 500 bytes.
+
+
+
+------------------ paper eg 2
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl p0: [] (<> ((x==2)))
+  1:    proc  0 (:init::1) paper-example-2.pml:5 (state 1)      [x = 0]
+                x = 0
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) paper-example-2.pml:8 (state 2) [((x==0))]
+  2:    proc  0 (:init::1) paper-example-2.pml:8 (state 2)      [((x==0))]
+                x = 0
+  3:    proc  0 (:init::1) paper-example-2.pml:9 (state 3)      [x = (x+1)]
+                x = 1
+  4:    proc  0 (:init::1) paper-example-2.pml:10 (state 4)     [goto l1]
+                x = 1
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) paper-example-2.pml:15 (state 7) [x = 0]
+        choice 2: proc  0 (:init::1) paper-example-2.pml:17 (state 9) [x = (x-1)]
+        choice 3: proc  0 (:init::1) paper-example-2.pml:19 (state 11) [((x==1))]
+Select [0-3]:  in 748 bytes.
+
+
+---------------------------------- paper eg goto
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+ltl p0: [] (<> ((x==2)))
+  1:    proc  0 (:init::1) paper-example-goto.pml:5 (state 1)   [x = 0]
+                x = 0
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) paper-example-goto.pml:8 (state 2) [((x==0))]
+  2:    proc  0 (:init::1) paper-example-goto.pml:8 (state 2)   [((x==0))]
+                x = 0
+  3:    proc  0 (:init::1) paper-example-goto.pml:9 (state 3)   [x = (x+1)]
+                x = 1
+  4:    proc  0 (:init::1) paper-example-goto.pml:10 (state 4)  [goto l1]
+                x = 1
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) paper-example-goto.pml:18 (state 10) [x = 0]
+        choice 2: proc  0 (:init::1) paper-example-goto.pml:20 (state 12) [((x==1))]
+Select [0-2]:  in 695 bytes.
+
+
+
+
+-------------------------------- dining phil
+the child's message is:
+  0:    proc  - (:root:) creates proc  0 (:init:)
+  1:    proc  0 (:init::1) philc-g.pml:27 (state 1)     [i = 0]
+                N = 3
+                fork[0] = 0
+                fork[1] = 0
+                fork[2] = 0
+                nr_eat = 0
+  2:    proc  0 (:init::1) philc-g.pml:35 (state 8)     [.(goto)]
+                N = 3
+                fork[0] = 0
+                fork[1] = 0
+                fork[2] = 0
+                nr_eat = 0
+Select stmnt (proc  0 (:init::1) )
+        choice 1: proc  0 (:init::1) philc-g.pml:28 (state 2) [((i<N))]
+  3:    proc  0 (:init::1) philc-g.pml:28 (state 2)     [((i<N))]
+                N = 3
+                fork[0] = 0
+                fork[1] = 0
+                fork[2] = 0
+                nr_eat = 0
+Starting Philosopher with pid 1
+  4:    proc  0 (:init::1) creates proc  1 (Philosopher)
+  4:    proc  0 (:init::1) philc-g.pml:29 (state 3)     [(run Philosopher(i))]
+                N = 3
+                fork[0] = 0
+                fork[1] = 0
+                fork[2] = 0
+                nr_eat = 0
+  5:    proc  0 (:init::1) philc-g.pml:29 (state 4)     [i = (i+1)]
+                N = 3
+                fork[0] = 0
+                fork[1] = 0
+                fork[2] = 0
+                nr_eat = 0
+Select stmnt (proc  0 (:init::1) )
+        choice 0: other process
+        choice 1: proc  0 (:init::1) philc-g.pml:28 (state 2) [((i<N))]
+Select [0-2]:  in 995 bytes.
+
+
+3:    proc  0 (:init::1) paper-example-2.pml:8 (state 2)      [((x==0))]
