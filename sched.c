@@ -41,24 +41,24 @@ extern char	*which_mtype(const char *);
 // BRISHNA : function for printing if/do options in interactive mode
 void printSubConditions(Element * e)
 {
-    // SeqList * sl = e->sub;
-    // while(sl)
-    // {
-    //     printf("\t\t\t:: ");        // indentation
-    //     printf("%s:%d\t" , sl->this->frst->n->fn->name , sl->this->frst->n->ln);        // filename and line number
-    //     printf(" [");
-    //     comment(stdout , sl->this->frst->n , 0);     // first line of block
-    //     if(sl->this->frst->n->ntyp == GOTO)
-    //     {
-    //         printGotoTarget(sl->this->frst);
-    //     }
-    //     if(sl->this->frst->n->ntyp == ATOMIC)
-    //     {
-    //         printAtomicTarget(sl->this->frst);
-    //     }
-    //     printf("]\n");
-    //     sl = sl->nxt ; 
-    // }
+    SeqList * sl = e->sub;
+    while(sl)
+    {
+        printf("\t\t\t:: ");        // indentation
+        printf("%s:%d\t" , sl->this->frst->n->fn->name , sl->this->frst->n->ln);        // filename and line number
+        printf(" [");
+        comment(stdout , sl->this->frst->n , 0);     // first line of block
+        if(sl->this->frst->n->ntyp == GOTO)
+        {
+            printGotoTarget(sl->this->frst);
+        }
+        if(sl->this->frst->n->ntyp == ATOMIC)
+        {
+            printAtomicTarget(sl->this->frst);
+        }
+        printf("]\n");
+        sl = sl->nxt ; 
+    }
 }
 
 // BRISHNA : function for printing target line number(s) of goto
@@ -67,65 +67,65 @@ void printGotoTarget(Element * e)
     Element * label = get_lab(e->n , 1);
     printf(":");
     
-    // // if target is a containing structure eg IF or DO, print all possible sub targets
-    // if(label->n->ntyp == IF || label->n->ntyp == DO)
-    // {
-    //     printf("%d" , label->n->ln);
-    //     SeqList * sl = label->sub;
-    //     while(sl)
-    //     {
-    //         printf(",");
-    //         printf("%d" , sl->this->frst->n->ln);
+    // if target is a containing structure eg IF or DO, print all possible sub targets
+    if(label->n->ntyp == IF || label->n->ntyp == DO)
+    {
+        printf("%d" , label->n->ln);
+        SeqList * sl = label->sub;
+        while(sl)
+        {
+            printf(",");
+            printf("%d" , sl->this->frst->n->ln);
             
-    //         // check if target is a goto itself. Iteratively print the entire goto chain
-    //         if(sl->this->frst->n->ntyp == GOTO)
-    //         {               
-    //             label = get_lab(sl->this->frst->n , 1);
-    //             printf("->%d" , label->n->ln);
-    //             while(label->n->ntyp == GOTO)
-    //             {
-    //                 label = get_lab(label->n , 1);
-    //                 printf("->%d" , label->n->ln);
-    //             }
-    //         }
+            // check if target is a goto itself. Iteratively print the entire goto chain
+            if(sl->this->frst->n->ntyp == GOTO)
+            {               
+                label = get_lab(sl->this->frst->n , 1);
+                printf("->%d" , label->n->ln);
+                while(label->n->ntyp == GOTO)
+                {
+                    label = get_lab(label->n , 1);
+                    printf("->%d" , label->n->ln);
+                }
+            }
             
-    //         sl = sl->nxt ; 
-    //     }
-    // }
-    // else
-    // {
-    //     printf("%d" , label->n->ln);
+            sl = sl->nxt ; 
+        }
+    }
+    else
+    {
+        printf("%d" , label->n->ln);
 
-    //     // check if target is a goto itself. Iteratively print the entire goto chain
-    //     while(label->n->ntyp == GOTO)
-    //     {
-    //         label = get_lab(label->n , 1);
-    //         printf("->%d" , label->n->ln);
-    //     }
-    // }
+        // check if target is a goto itself. Iteratively print the entire goto chain
+        while(label->n->ntyp == GOTO)
+        {
+            label = get_lab(label->n , 1);
+            printf("->%d" , label->n->ln);
+        }
+    }
 }
 
 // BRISHNA : function for printing target line number(s) of atomic section
 void printAtomicTarget(Element * e)
 {
-    // printf(":");
+    printf(":");
     
-    // // if target is a containing structure eg IF or DO, print all possible sub targets
-    // if(e->n->sl->this->frst->n->ntyp == IF || e->n->sl->this->frst->n->ntyp == DO)
-    // {
-    //     printf("%d" , e->n->sl->this->frst->n->ln);
-    //     SeqList * sl = e->n->sl->this->frst->sub;
-    //     while(sl)
-    //     {
-    //         printf(",%d" , sl->this->frst->n->ln);                      
-    //         sl = sl->nxt ; 
-    //     }
+    // if target is a containing structure eg IF or DO, print all possible sub targets
+    if(e->n->sl->this->frst->n->ntyp == IF || e->n->sl->this->frst->n->ntyp == DO)
+    {
+        printf("%d" , e->n->sl->this->frst->n->ln);
+        SeqList * sl = e->n->sl->this->frst->sub;
+        while(sl)
+        {
+            printf(",%d" , sl->this->frst->n->ln);                      
+            sl = sl->nxt ; 
+        }
         
-    // }
-    // else
-    // {
-    //     printf("%d" , e->n->sl->this->frst->n->ln);
-    // }
+    }
+    else
+    {
+        printf("%d" , e->n->sl->this->frst->n->ln);
+    }
 }
 
 // BRISHNA : function for printing local aliases of global chans when dumping globals
